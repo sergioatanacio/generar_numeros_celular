@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Números Aleatorios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+        <h1 class="text-2xl font-bold mb-4 text-center">Generador de Números</h1>
+        <div id="numbers" class="bg-blue-100 p-4 rounded text-center text-xl font-bold mb-4 h-14 flex items-center justify-center">
+            9 - - &nbsp; - - - &nbsp; - - -
+        </div>
+        <div class="flex space-x-4">
+            <button id="generateBtn" class="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300">Generar Números</button>
+            <button id="copyBtn" class="flex-1 bg-green-500 text-white py-2 rounded hover:bg-green-600 transition duration-300">Copiar al Portapapeles</button>
+        </div>
+    </div>
+
+    <script>
+        const numbersContainer = document.getElementById('numbers');
+        const generateBtn = document.getElementById('generateBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        let currentNumbers = '';
+
+        generateBtn.addEventListener('click', generateNumbers);
+        copyBtn.addEventListener('click', copyToClipboard);
+
+        function generateNumbers() {
+            const numbers = [9];
+            for (let i = 1; i < 9; i++) {
+                numbers.push(Math.floor(Math.random() * 10));
+            }
+            
+            currentNumbers = numbers.join('');
+            const formattedNumbers = [
+                currentNumbers.slice(0, 3),
+                currentNumbers.slice(3, 6),
+                currentNumbers.slice(6)
+            ].join(' ');
+            
+            numbersContainer.textContent = formattedNumbers;
+        }
+
+        function copyToClipboard() {
+            if (currentNumbers) {
+                const formattedNumbers = [
+                    currentNumbers.slice(0, 3),
+                    currentNumbers.slice(3, 6),
+                    currentNumbers.slice(6)
+                ].join(' ');
+                
+                navigator.clipboard.writeText(formattedNumbers).then(() => {
+                    // alert('Números copiados al portapapeles');
+                }).catch(err => {
+                    console.error('Error al copiar: ', err);
+                });
+            } else {
+                alert('Genera números primero');
+            }
+        }
+    </script>
+</body>
+</html>
